@@ -9,5 +9,5 @@ LOCATION = os.environ.get(
     'AIR_QUALITY_LOCATION', os.uname().nodename)
 
 
-pm25, pm10 = sds011_read.median_read(DEVICE)
+pm25, pm10 = sds011_read.outlier_read(DEVICE)
 monitoring.write_time_series(LOCATION, pm25, pm10)

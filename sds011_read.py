@@ -16,6 +16,23 @@ def median_read(device, reads=5, delay=None):
   return sorted(pm25)[median], sorted(pm10)[median]
 
 
+def outlier_read(device, reads=5, delay=None, min_value=0.0, max_value=300.0):
+  """Read `device` up to `reads` times to get a value in the expected range."""
+  if delay is None:
+    delay = datetime.timedelta(seconds=5)
+
+  for _ in range(reads):
+    pm25, pm10 = single_read(device)
+    if (pm25 >= min_value and pm25 <= max_value and
+        pm10 >= min_value and pm10 <= max_value):
+      return pm25, pm10
+
+    time.sleep(delay.total_seconds())
+
+  raise ValueError('No value in the expected range[%s, %s] after % attempts' %
+                   (min_value, max_value, reads))
+
+
 def multiple_reads(device, reads=5, delay=None):
   """Read the device `reads` times and return all values."""
   if delay is None:
