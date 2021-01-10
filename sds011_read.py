@@ -11,6 +11,13 @@ sensors = {}
 
 def median_read(device, reads=5, delay=None):
   """Read the device `reads` times and return the median values."""
+  pm25, pm10 = multiple_reads(device, reads=reads, delay=delay)
+  median = reads // 2
+  return sorted(pm25)[median], sorted(pm10)[median]
+
+
+def multiple_reads(device, reads=5, delay=None):
+  """Read the device `reads` times and return all values."""
   if delay is None:
     delay = datetime.timedelta(seconds=1)
 
@@ -23,8 +30,7 @@ def median_read(device, reads=5, delay=None):
     if delay:
       time.sleep(delay.total_seconds())
 
-  median = reads/2
-  return sorted(pm25)[median], sorted(pm10)[median]
+  return pm25, pm10
 
 
 def single_read(device):
