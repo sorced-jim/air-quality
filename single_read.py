@@ -1,10 +1,30 @@
 #!/usr/bin/python3
-"""A module for single single reads from a SDS011 sensor."""
+"""A module for reading from a SDS011 sensor."""
 
+import datetime
 import serial
+import time
 
 
 sensors = {}
+
+
+def median_read(device, reads=5, delay=None):
+  """Read the device `reads` times and return the median values."""
+  if delay is None:
+    delay = datetime.timedelta(seconds=1)
+
+  pm25 = []
+  pm10 = []
+  for _ in range(reads):
+    v = single_read(device)
+    pm25.append(v[0])
+    pm10.append(v[0])
+    if delay:
+      time.sleep(delay.total_seconds())
+
+  median = reads/2
+  return sorted(pm25)[median], sorted(pm10)[median]
 
 
 def single_read(device):
