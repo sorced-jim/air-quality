@@ -1,4 +1,3 @@
-
 py_binary(
     name = 'single_measure',
     srcs = ['single_measure.py'],
@@ -14,5 +13,14 @@ py_library(
 
 py_library(
     name = 'sds011',
+    srcs_version = 'PY3',
     srcs = ['sds011_read.py'],
+)
+
+py_test(
+    name = 'sds011_read_test',
+    srcs = ['sds011_read_test.py'],
+    python_version = 'PY3',
+    srcs_version = 'PY3',
+    deps = [':sds011'],
 )

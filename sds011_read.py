@@ -29,7 +29,7 @@ def outlier_read(device, reads=5, delay=None, min_value=0.0, max_value=300.0):
 
     time.sleep(delay.total_seconds())
 
-  raise ValueError('No value in the expected range[%s, %s] after % attempts' %
+  raise ValueError('No value in the expected range[%s, %s] after %s attempts' %
                    (min_value, max_value, reads))
 
 
@@ -43,7 +43,7 @@ def multiple_reads(device, reads=5, delay=None):
   for _ in range(reads):
     v = single_read(device)
     pm25.append(v[0])
-    pm10.append(v[0])
+    pm10.append(v[1])
     if delay:
       time.sleep(delay.total_seconds())
 
