@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# bazel files
+bazel-air-quality
+bazel-bin
+bazel-out
+bazel-testlogs
